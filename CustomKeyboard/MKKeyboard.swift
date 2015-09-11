@@ -25,7 +25,7 @@ class MKKeyboard: UIView, UITextViewDelegate {
     let buttonTitleColorForNumberPad : UIColor = UIColor(red: 0.0/255.0, green: 161.0/255.0, blue: 123.0/255.0, alpha: 1.0)
     let buttonBackgroundColorForNumberPad : UIColor = UIColor.whiteColor()
     let buttonCornerRadiusForNumberPad : CGFloat = 0.0
-    let numberPadButtons : [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "⇍"]
+    let numberPadButtons : [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "⇍", "A"]
     
     
     //Number pad constant values
@@ -87,9 +87,9 @@ class MKKeyboard: UIView, UITextViewDelegate {
             
             var yOriginFactor = Int(buttonCounter / 3)
             var floatYOriginFactor = CGFloat(yOriginFactor)
-            var yOrigin = floatYOriginFactor * viewforKeyBoard!.frame.size.height/4
+            var yOrigin = floatYOriginFactor * viewforKeyBoard!.frame.size.height/5
             var width = viewforKeyBoard!.frame.size.width/3
-            var height =  viewforKeyBoard!.frame.size.height/4
+            var height =  viewforKeyBoard!.frame.size.height/5
             
             var buttonToBeShown = UIButton()
             buttonToBeShown.frame = CGRectMake(xOrigin, yOrigin, width, height)
@@ -103,19 +103,20 @@ class MKKeyboard: UIView, UITextViewDelegate {
             buttonToBeShown.layer.borderColor = buttonBorderColorForNumberPad.CGColor
             buttonToBeShown.layer.borderWidth = 1.0
             buttonToBeShown.clipsToBounds = true
-            buttonToBeShown.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            buttonToBeShown.addTarget(self, action: "keyPressedInNumberPad:", forControlEvents: .TouchUpInside)
             viewforKeyBoard?.addSubview(buttonToBeShown)
             
             buttonCounter += 1
         }
         
         
-        
-        UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
-            self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height - 216.0, UIScreen.mainScreen().bounds.size.width, 216.0)
-            
-            }) { (value : Bool) -> Void in
-                self.iskeyBoardUp = true
+        if iskeyBoardUp == false{
+            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
+                self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height - 216.0, UIScreen.mainScreen().bounds.size.width, 216.0)
+                
+                }) { (value : Bool) -> Void in
+                    self.iskeyBoardUp = true
+            }
         }
     }
     
@@ -133,7 +134,7 @@ class MKKeyboard: UIView, UITextViewDelegate {
     
     
     
-    func keyPressed(sender: AnyObject?) {
+    func keyPressedInNumberPad(sender: AnyObject?) {
         let button = sender as! UIButton
         let title = button.titleForState(.Normal)
         
@@ -146,24 +147,93 @@ class MKKeyboard: UIView, UITextViewDelegate {
                 var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
                 if title == "⇍" && count(textView.text) > 0 {
                     textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
+                    
                 } else if title != "⇍"{
-                    textView.text = "\(textView.text)\(title!)"
+                    
+                    if title == "A"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                subview.removeFromSuperview()
+                            }
+                        }
+
+                        drawTextPadKeyBoard()
+                    }else{
+                        textView.text = "\(textView.text)\(title!)"
+                    }
                 }
                 
             }else{
-                
+                //do nothing
             }
         }else{
-            
+            //do nothing
         }
     }
+    
+    
+    
+    
+    func keyPressedInTextPad(sender: AnyObject?) {
+        let button = sender as! UIButton
+        let title = button.titleForState(.Normal)
+        
+        var dataDict = Dictionary<String, String>()
+        dataDict["key"] = title
+        
+        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
+            if newcurrentInputField.isKindOfClass(MKCutomTextView){
+                
+                var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
+                if title == "⇍" && count(textView.text) > 0 {
+                    textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
+                    
+                } else if title != "⇍"{
+                    
+                    if title == "123"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                subview.removeFromSuperview()
+                            }
+                        }
+                        
+                        drawNumberPadKeyBoard()
+                        
+                    }else if title == "SPACE" && count(textView.text) > 0{
+                        //space generation code
+                        let space : String = " "
+                        textView.text = "\(textView.text) "
+                        
+                    }else if title == "↵" && count(textView.text) > 0{
+                        //enter generation code
+                        let enter : String = "\n"
+                        textView.text = "\(textView.text)\n"
+                        
+                    }else if title == "Done"{
+                        //done button to hide keyboard
+                        hideKeyBoard()
+                    }else{
+                        textView.text = "\(textView.text)\(title!)"
+                    }
+                }
+                
+            }else{
+                //do nothing
+            }
+        }else{
+            //do nothing
+        }
+    }
+
     
     private func drawTextPadKeyBoard(){
         
         let firstTextRowElemnts : [String] = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
         let secondTextRowElemnts : [String] = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
         let thirdTextRowElemnts : [String] = ["⇧", "Z", "X", "C", "V", "B", "N", "M", "⇍"]
-        let fourthRowElement : [String] = ["123", ":)", "SPACE", "Search"]
+        let fourthRowElement : [String] = ["123", "SPACE", "↵", "Done"]
         
         var buttonCounter : CGFloat = 0.0
         
@@ -187,7 +257,7 @@ class MKKeyboard: UIView, UITextViewDelegate {
             buttonToBeShown.layer.borderColor = buttonBorderColorForTextPad.CGColor
             buttonToBeShown.layer.borderWidth = 1.0
             buttonToBeShown.clipsToBounds = true
-            buttonToBeShown.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            buttonToBeShown.addTarget(self, action: "keyPressedInTextPad:", forControlEvents: .TouchUpInside)
             viewforKeyBoard?.addSubview(buttonToBeShown)
             
             buttonCounter += 1
@@ -215,7 +285,7 @@ class MKKeyboard: UIView, UITextViewDelegate {
             buttonToBeShown.layer.borderColor = buttonBorderColorForTextPad.CGColor
             buttonToBeShown.layer.borderWidth = 1.0
             buttonToBeShown.clipsToBounds = true
-            buttonToBeShown.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            buttonToBeShown.addTarget(self, action: "keyPressedInTextPad:", forControlEvents: .TouchUpInside)
             viewforKeyBoard?.addSubview(buttonToBeShown)
             
             buttonCounter += 1
@@ -244,7 +314,7 @@ class MKKeyboard: UIView, UITextViewDelegate {
             buttonToBeShown.layer.borderColor = buttonBorderColorForTextPad.CGColor
             buttonToBeShown.layer.borderWidth = 1.0
             buttonToBeShown.clipsToBounds = true
-            buttonToBeShown.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            buttonToBeShown.addTarget(self, action: "keyPressedInTextPad:", forControlEvents: .TouchUpInside)
             viewforKeyBoard?.addSubview(buttonToBeShown)
             
             buttonCounter += 1
@@ -273,25 +343,26 @@ class MKKeyboard: UIView, UITextViewDelegate {
             buttonToBeShown.layer.borderColor = buttonBorderColorForTextPad.CGColor
             buttonToBeShown.layer.borderWidth = 1.0
             buttonToBeShown.clipsToBounds = true
-            buttonToBeShown.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            buttonToBeShown.addTarget(self, action: "keyPressedInTextPad:", forControlEvents: .TouchUpInside)
             viewforKeyBoard?.addSubview(buttonToBeShown)
             
             buttonCounter += 1
         }
         
-        
-        UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
-            self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height - 216.0, UIScreen.mainScreen().bounds.size.width, 216.0)
-            
-            }) { (value : Bool) -> Void in
-                self.iskeyBoardUp = true
+        if iskeyBoardUp == false {
+            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
+                self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height - 216.0, UIScreen.mainScreen().bounds.size.width, 216.0)
+                
+                }) { (value : Bool) -> Void in
+                    self.iskeyBoardUp = true
+            }
         }
     }
     
     
     func hideKeyBoard(){
         if iskeyBoardUp == true {
-            UIView.animateWithDuration(0.4, delay: 0.0, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.5, options: .BeginFromCurrentState, animations: { () -> Void in
+            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
                 self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0)
                 
                 }) { (value : Bool) -> Void in
@@ -299,6 +370,4 @@ class MKKeyboard: UIView, UITextViewDelegate {
             }
         }
     }
-    
-
 }

@@ -9,15 +9,6 @@
 import UIKit
 
 class MKCutomTextView: UITextView , UITextViewDelegate{
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     
     init(frame : CGRect , textContainer : NSTextContainer!, type :KeyboardType){
         super.init(frame: frame, textContainer: textContainer)
@@ -31,12 +22,12 @@ class MKCutomTextView: UITextView , UITextViewDelegate{
     }
     
     private func implementTextView(){
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "insertTextInTextView:", name: UITextViewTextDidBeginEditingNotification, object: self)
     }
     
     
     func insertTextInTextView(notification : NSNotification){
         MKKeyboard.sharedInstance.currentInputField = self
+        
     }
 }

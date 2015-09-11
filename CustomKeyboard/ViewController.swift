@@ -50,4 +50,9 @@ extension ViewController: UITextViewDelegate {
         println("textview.tag : \(textView.tag)")
         return true
     }
+    
+    
+    func textViewDidChange(textView: UITextView) {
+        //code to change line
+    }
 }
