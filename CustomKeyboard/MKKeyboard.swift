@@ -213,7 +213,10 @@ class MKKeyboard: UIView, UITextViewDelegate {
                         
                     }else if title == "Done"{
                         //done button to hide keyboard
-                        hideKeyBoard()
+                        if (MKKeyboard.sharedInstance.currentInputField?.isKindOfClass(MKCutomTextView) != nil){
+                            var inputField = MKKeyboard.sharedInstance.currentInputField as? MKCutomTextView
+                            inputField?.resignFirstResponder()
+                        }
                     }else{
                         textView.text = "\(textView.text)\(title!)"
                     }
@@ -359,15 +362,16 @@ class MKKeyboard: UIView, UITextViewDelegate {
         }
     }
     
-    
-    func hideKeyBoard(){
-        if iskeyBoardUp == true {
-            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
-                self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0)
-                
-                }) { (value : Bool) -> Void in
-                    self.iskeyBoardUp = false
-            }
-        }
-    }
+//    
+//    func hideKeyBoard(){
+//        if iskeyBoardUp == true {
+//            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
+//                self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0)
+//                
+//                }) { (value : Bool) -> Void in
+//                    self.iskeyBoardUp = false
+//                    self.removeFromSuperview()
+//            }
+//        }
+//    }
 }
