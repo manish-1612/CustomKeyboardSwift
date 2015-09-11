@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		7948E6C31BA2A96E007BED80 /* MKCutomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948E6C21BA2A96E007BED80 /* MKCutomTextView.swift */; };
+		7948E6C71BA301FC007BED80 /* MKKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948E6C61BA301FC007BED80 /* MKKeyboard.swift */; };
 		79A286B81BA17A7700BF39F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A286B71BA17A7700BF39F6 /* AppDelegate.swift */; };
 		79A286BA1BA17A7700BF39F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A286B91BA17A7700BF39F6 /* ViewController.swift */; };
 		79A286BD1BA17A7700BF39F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79A286BB1BA17A7700BF39F6 /* Main.storyboard */; };
 		79A286BF1BA17A7700BF39F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79A286BE1BA17A7700BF39F6 /* Images.xcassets */; };
 		79A286C21BA17A7700BF39F6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A286C01BA17A7700BF39F6 /* LaunchScreen.xib */; };
 		79A286CE1BA17A7700BF39F6 /* CustomKeyboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A286CD1BA17A7700BF39F6 /* CustomKeyboardTests.swift */; };
-		79A286D81BA17AD500BF39F6 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A286D71BA17AD500BF39F6 /* Keyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		7948E6C21BA2A96E007BED80 /* MKCutomTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKCutomTextView.swift; sourceTree = "<group>"; };
+		7948E6C61BA301FC007BED80 /* MKKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKKeyboard.swift; sourceTree = "<group>"; };
 		79A286B21BA17A7700BF39F6 /* CustomKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79A286B61BA17A7700BF39F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79A286B71BA17A7700BF39F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		79A286C71BA17A7700BF39F6 /* CustomKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79A286CC1BA17A7700BF39F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79A286CD1BA17A7700BF39F6 /* CustomKeyboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardTests.swift; sourceTree = "<group>"; };
-		79A286D71BA17AD500BF39F6 /* Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 				79A286B71BA17A7700BF39F6 /* AppDelegate.swift */,
 				79A286B91BA17A7700BF39F6 /* ViewController.swift */,
 				7948E6C21BA2A96E007BED80 /* MKCutomTextView.swift */,
-				79A286D71BA17AD500BF39F6 /* Keyboard.swift */,
+				7948E6C61BA301FC007BED80 /* MKKeyboard.swift */,
 				79A286BB1BA17A7700BF39F6 /* Main.storyboard */,
 				79A286BE1BA17A7700BF39F6 /* Images.xcassets */,
 				79A286C01BA17A7700BF39F6 /* LaunchScreen.xib */,
@@ -219,7 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79A286BA1BA17A7700BF39F6 /* ViewController.swift in Sources */,
-				79A286D81BA17AD500BF39F6 /* Keyboard.swift in Sources */,
+				7948E6C71BA301FC007BED80 /* MKKeyboard.swift in Sources */,
 				7948E6C31BA2A96E007BED80 /* MKCutomTextView.swift in Sources */,
 				79A286B81BA17A7700BF39F6 /* AppDelegate.swift in Sources */,
 			);

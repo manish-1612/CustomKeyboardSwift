@@ -21,7 +21,7 @@ class MKCutomTextView: UITextView , UITextViewDelegate{
     
     init(frame : CGRect , textContainer : NSTextContainer!, type :KeyboardType){
         super.init(frame: frame, textContainer: textContainer)
-        self.inputView = Keyboard(type: type)
+        self.inputView = MKKeyboard(type: type)
         implementTextView()
     }
     
@@ -37,6 +37,6 @@ class MKCutomTextView: UITextView , UITextViewDelegate{
     
     
     func insertTextInTextView(notification : NSNotification){
-        Keyboard.sharedInstance.currentInputField = self
+        MKKeyboard.sharedInstance.currentInputField = self
     }
 }

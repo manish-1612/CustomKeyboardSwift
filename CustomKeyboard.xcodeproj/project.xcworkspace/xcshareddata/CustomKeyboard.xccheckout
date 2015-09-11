@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>305E1D7F-3751-4584-92EE-A2100FFC1B11</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CustomKeyboard</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>61C2F12903601E46BE5D75D63ECC2A55C77CF106</key>
+		<string>https://github.com/manishatinnofied/CustomKeyboardSwift.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CustomKeyboard.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>61C2F12903601E46BE5D75D63ECC2A55C77CF106</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/manishatinnofied/CustomKeyboardSwift.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>61C2F12903601E46BE5D75D63ECC2A55C77CF106</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>61C2F12903601E46BE5D75D63ECC2A55C77CF106</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CustomKeyboard</string>
+		</dict>
+	</array>
+</dict>
+</plist>

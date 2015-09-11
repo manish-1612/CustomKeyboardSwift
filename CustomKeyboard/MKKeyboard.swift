@@ -1,19 +1,21 @@
 //
-//  Keyboard.swift
+//  MKKeyboard.swift
 //  CustomKeyboard
 //
-//  Created by Manish Kumar on 09/09/15.
+//  Created by Manish Kumar on 11/09/15.
 //  Copyright (c) 2015 Innofied Solutions Pvt. Ltd. All rights reserved.
 //
 
 import UIKit
+
 
 enum KeyboardType {
     case KeyboardTypeNumberPad
     case KeyBoradTypeTextPad
 }
 
-class Keyboard: UIView, UITextViewDelegate {
+
+class MKKeyboard: UIView, UITextViewDelegate {
 
     var viewforKeyBoard: UIView?
     var iskeyBoardUp: Bool?
@@ -32,13 +34,13 @@ class Keyboard: UIView, UITextViewDelegate {
     let buttonTitleColorForTextPad : UIColor = UIColor(red: 0.0/255.0, green: 161.0/255.0, blue: 123.0/255.0, alpha: 1.0)
     let buttonBackgroundColorForTextPad : UIColor = UIColor.whiteColor()
     let buttonCornerRadiusForTextPad : CGFloat = 5.0
-
+    
     
     //get instance of current text view or field
     var currentInputField : AnyObject?
-        
-    static var sharedInstance = Keyboard(type:.KeyboardTypeNumberPad)
-
+    
+    static var sharedInstance = MKKeyboard(type:.KeyboardTypeNumberPad)
+    
     init(type : KeyboardType){
         super.init(frame: CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0))
         iskeyBoardUp = false
@@ -49,7 +51,7 @@ class Keyboard: UIView, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    
     private func drawInitialViewForKeyboard(type : KeyboardType){
         //creating view for keyboard
         viewforKeyBoard = UIView(frame: CGRectMake(0.0, 0.0, UIScreen.mainScreen().bounds.size.width, 216.0))
@@ -65,7 +67,7 @@ class Keyboard: UIView, UITextViewDelegate {
     
     
     func showKeyBoard(type : KeyboardType){
-    
+        
         if iskeyBoardUp == false{
             if type == KeyboardType.KeyboardTypeNumberPad {
                 drawNumberPadKeyBoard()
@@ -85,7 +87,7 @@ class Keyboard: UIView, UITextViewDelegate {
             
             var yOriginFactor = Int(buttonCounter / 3)
             var floatYOriginFactor = CGFloat(yOriginFactor)
-            var yOrigin = floatYOriginFactor * viewforKeyBoard!.frame.size.height/4            
+            var yOrigin = floatYOriginFactor * viewforKeyBoard!.frame.size.height/4
             var width = viewforKeyBoard!.frame.size.width/3
             var height =  viewforKeyBoard!.frame.size.height/4
             
@@ -113,7 +115,7 @@ class Keyboard: UIView, UITextViewDelegate {
             self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height - 216.0, UIScreen.mainScreen().bounds.size.width, 216.0)
             
             }) { (value : Bool) -> Void in
-               self.iskeyBoardUp = true
+                self.iskeyBoardUp = true
         }
     }
     
@@ -128,7 +130,7 @@ class Keyboard: UIView, UITextViewDelegate {
         UIGraphicsEndImageContext()
         return image
     }
-
+    
     
     
     func keyPressed(sender: AnyObject?) {
@@ -138,7 +140,7 @@ class Keyboard: UIView, UITextViewDelegate {
         var dataDict = Dictionary<String, String>()
         dataDict["key"] = title
         
-        if let newcurrentInputField:AnyObject = Keyboard.sharedInstance.currentInputField {
+        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
             if newcurrentInputField.isKindOfClass(MKCutomTextView){
                 
                 var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
@@ -147,7 +149,7 @@ class Keyboard: UIView, UITextViewDelegate {
                 } else if title != "⇍"{
                     textView.text = "\(textView.text)\(title!)"
                 }
-
+                
             }else{
                 
             }
@@ -190,7 +192,7 @@ class Keyboard: UIView, UITextViewDelegate {
             
             buttonCounter += 1
         }
-
+        
         buttonCounter = 0.0
         
         for button in secondTextRowElemnts{
@@ -247,7 +249,7 @@ class Keyboard: UIView, UITextViewDelegate {
             
             buttonCounter += 1
         }
-
+        
         
         buttonCounter = 0.0
         
@@ -297,5 +299,6 @@ class Keyboard: UIView, UITextViewDelegate {
             }
         }
     }
+    
 
 }
