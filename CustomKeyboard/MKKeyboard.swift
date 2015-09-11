@@ -190,8 +190,16 @@ class MKKeyboard: UIView, UITextViewDelegate {
                     textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
                     
                 } else if title != "⇍"{
-                    
-                    if title == "123"{
+                   
+                    if title == "⇧"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                var button = subview as? UIButton
+                                var title = subview.titleForState(.Normal)
+                            }
+                        }
+                    }else if title == "123"{
                         //keyboard switching code
                         for subview in viewforKeyBoard!.subviews{
                             if subview.isKindOfClass(UIButton){
