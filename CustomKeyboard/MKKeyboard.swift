@@ -89,22 +89,6 @@ class MKKeyboard: UIView, UITextViewDelegate {
         }
     }
     
-//    /**
-//    function to bring keyboard up
-//    
-//    :param: type type of keyboard
-//    */
-//    func showKeyBoard(type : KeyboardType){
-//        
-//        if iskeyBoardUp == false{
-//            if type == KeyboardType.KeyboardTypeNumberPad {
-//                drawNumberPadKeyBoard()
-//            }else{
-//                drawTextPadKeyBoard()
-//            }
-//        }
-//    }
-    
     
     //MARK:- textpad and numberpad drawing methods
     
@@ -393,12 +377,10 @@ class MKKeyboard: UIView, UITextViewDelegate {
                         
                     }else if title == "SPACE" && count(textView.text) > 0{
                         //space generation code
-                        let space : String = " "
                         textView.text = "\(textView.text) "
                         
-                    }else if title == "↵" && count(textView.text) > 0{
+                    }else if title == "↵"{
                         //enter generation code
-                        let enter : String = "\n"
                         textView.text = "\(textView.text)\n"
                         
                     }else if title == "Done"{
@@ -439,20 +421,4 @@ class MKKeyboard: UIView, UITextViewDelegate {
         UIGraphicsEndImageContext()
         return image
     }
-    
-
-
-    
-//    
-//    func hideKeyBoard(){
-//        if iskeyBoardUp == true {
-//            UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: { () -> Void in
-//                self.frame = CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0)
-//                
-//                }) { (value : Bool) -> Void in
-//                    self.iskeyBoardUp = false
-//                    self.removeFromSuperview()
-//            }
-//        }
-//    }
 }

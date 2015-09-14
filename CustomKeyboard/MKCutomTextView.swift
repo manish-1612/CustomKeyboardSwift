@@ -26,6 +26,7 @@ class MKCutomTextView: UITextView , UITextViewDelegate{
     }
     
     
+    
     func insertTextInTextView(notification : NSNotification){
         MKKeyboard.sharedInstance.currentInputField = self
         

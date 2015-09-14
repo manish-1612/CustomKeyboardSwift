@@ -26,32 +26,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0e-lQ-e2R" customClass="MKCutomTextView" customModule="CustomKeyboard" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="110" width="320" height="123"/>
-                                <color key="backgroundColor" red="0.033235357479999998" green="0.31262466760000002" blue="0.0051051536880000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="123" id="Rsr-KM-gqP"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="123" id="kak-1B-czl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="a0e-lQ-e2R" firstAttribute="top" secondItem="bFe-sq-kCz" secondAttribute="bottom" id="8Sv-xg-gIf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="a0e-lQ-e2R" secondAttribute="trailing" constant="-16" id="Cpf-dh-Yjk"/>
-                            <constraint firstItem="a0e-lQ-e2R" firstAttribute="top" secondItem="bFe-sq-kCz" secondAttribute="bottom" id="Ibm-EG-t1D"/>
                             <constraint firstItem="bFe-sq-kCz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="Sik-s8-1TC"/>
                             <constraint firstItem="bFe-sq-kCz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="i9z-mG-P4V"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bFe-sq-kCz" secondAttribute="trailing" constant="-16" id="vJe-hr-crm"/>
-                            <constraint firstItem="a0e-lQ-e2R" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="vLj-PY-Rg9"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="textView" destination="bFe-sq-kCz" id="one-MC-N9p"/>
-                        <outlet property="textView2" destination="a0e-lQ-e2R" id="cBX-x8-eUA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
