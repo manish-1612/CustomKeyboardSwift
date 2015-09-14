@@ -45,6 +45,9 @@ class MKKeyboard: UIView, UITextViewDelegate {
     static var sharedInstance = MKKeyboard(type:.KeyboardTypeNumberPad)
     
     
+    
+    //MARK:- init methods
+    
     /**
     function to init the key board view
     
@@ -86,7 +89,6 @@ class MKKeyboard: UIView, UITextViewDelegate {
         }
     }
     
-//
 //    /**
 //    function to bring keyboard up
 //    
@@ -103,6 +105,8 @@ class MKKeyboard: UIView, UITextViewDelegate {
 //        }
 //    }
     
+    
+    //MARK:- textpad and numberpad drawing methods
     
     /**
     function to draw number pad keyboard
@@ -150,154 +154,8 @@ class MKKeyboard: UIView, UITextViewDelegate {
     }
     
     
-    /**
-    function to get an image using UIColor
-    
-    :param: color color of image
-    :param: size  size of image
-    
-    :returns: UIImage
-    */
-    private func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
-        let rect = CGRectMake(0, 0, size.width, size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
     
     
-    /**
-    function to listen keypad button press activity for number pad
-    
-    :param: sender UIButton
-    */
-    func keyPressedInNumberPad(sender: AnyObject?) {
-        let button = sender as! UIButton
-        let title = button.titleForState(.Normal)
-        
-        var dataDict = Dictionary<String, String>()
-        dataDict["key"] = title
-        
-        //asssiging the currently activate field
-        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
-            if newcurrentInputField.isKindOfClass(MKCutomTextView){
-                
-                
-                var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
-                if title == "⇍" && count(textView.text) > 0 {
-                    textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
-                    
-                } else if title != "⇍"{
-                    
-                    if title == "A"{
-                        //keyboard switching code
-                        for subview in viewforKeyBoard!.subviews{
-                            if subview.isKindOfClass(UIButton){
-                                subview.removeFromSuperview()
-                            }
-                        }
-
-                        drawTextPadKeyBoard()
-                    }else{
-                        textView.text = "\(textView.text)\(title!)"
-                    }
-                }
-                
-            }else{
-                //do nothing
-            }
-        }else{
-            //do nothing
-        }
-    }
-    
-    
-    
-    /**
-    function to listen keypad button press activity for text pad
-    
-    :param: sender UIButton
-    */
-    func keyPressedInTextPad(sender: AnyObject?) {
-        let button = sender as! UIButton
-        let title = button.titleForState(.Normal)
-        
-        var dataDict = Dictionary<String, String>()
-        dataDict["key"] = title
-        
-        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
-            if newcurrentInputField.isKindOfClass(MKCutomTextView){
-                
-                var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
-                if title == "⇍" && count(textView.text) > 0 {
-                    textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
-                    
-                } else if title != "⇍"{
-                   
-                    if title == "⇧"{
-                        //keyboard switching code
-                        for subview in viewforKeyBoard!.subviews{
-                            if subview.isKindOfClass(UIButton){
-                                var localButton = subview as? UIButton
-                                var localTitle = localButton!.titleForState(.Normal)
-                                
-                                var length : Int =  count(localTitle!.utf16)
-
-                                if length == 1 {
-                                    if isCapitalized == false {
-                                        localButton?.setTitle(localTitle?.uppercaseString, forState:.Normal)
-                                    }else{
-                                        localButton?.setTitle(localTitle?.lowercaseString, forState:.Normal)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        
-                        isCapitalized = !isCapitalized
-
-                    }else if title == "123"{
-                        //keyboard switching code
-                        for subview in viewforKeyBoard!.subviews{
-                            if subview.isKindOfClass(UIButton){
-                                subview.removeFromSuperview()
-                            }
-                        }
-                        
-                        drawNumberPadKeyBoard()
-                        
-                    }else if title == "SPACE" && count(textView.text) > 0{
-                        //space generation code
-                        let space : String = " "
-                        textView.text = "\(textView.text) "
-                        
-                    }else if title == "↵" && count(textView.text) > 0{
-                        //enter generation code
-                        let enter : String = "\n"
-                        textView.text = "\(textView.text)\n"
-                        
-                    }else if title == "Done"{
-                        //done button to hide keyboard
-                        if (MKKeyboard.sharedInstance.currentInputField?.isKindOfClass(MKCutomTextView) != nil){
-                            var inputField = MKKeyboard.sharedInstance.currentInputField as? MKCutomTextView
-                            inputField?.resignFirstResponder()
-                        }
-                    }else{
-                        textView.text = "\(textView.text)\(title!)"
-                    }
-                }
-                
-            }else{
-                //do nothing
-            }
-        }else{
-            //do nothing
-        }
-    }
-
     
     /**
     function to draw text pad keyboard
@@ -430,6 +288,160 @@ class MKKeyboard: UIView, UITextViewDelegate {
             }
         }
     }
+    
+    //MARK:- textpad and numberpad selector methods
+    
+    /**
+    function to listen keypad button press activity for number pad
+    
+    :param: sender UIButton
+    */
+    func keyPressedInNumberPad(sender: AnyObject?) {
+        let button = sender as! UIButton
+        let title = button.titleForState(.Normal)
+        
+        var dataDict = Dictionary<String, String>()
+        dataDict["key"] = title
+        
+        //asssiging the currently activate field
+        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
+            if newcurrentInputField.isKindOfClass(MKCutomTextView){
+                
+                
+                var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
+                if title == "⇍" && count(textView.text) > 0 {
+                    textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
+                    
+                } else if title != "⇍"{
+                    
+                    if title == "A"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                subview.removeFromSuperview()
+                            }
+                        }
+
+                        drawTextPadKeyBoard()
+                    }else{
+                        textView.text = "\(textView.text)\(title!)"
+                    }
+                }
+                
+            }else{
+                //do nothing
+            }
+        }else{
+            //do nothing
+        }
+    }
+    
+    
+    
+    /**
+    function to listen keypad button press activity for text pad
+    
+    :param: sender UIButton
+    */
+    func keyPressedInTextPad(sender: AnyObject?) {
+        let button = sender as! UIButton
+        let title = button.titleForState(.Normal)
+        
+        var dataDict = Dictionary<String, String>()
+        dataDict["key"] = title
+        
+        if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
+            if newcurrentInputField.isKindOfClass(MKCutomTextView){
+                
+                var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
+                if title == "⇍" && count(textView.text) > 0 {
+                    textView.text = textView.text.substringToIndex(textView.text.endIndex.predecessor())
+                    
+                } else if title != "⇍"{
+                   
+                    if title == "⇧"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                var localButton = subview as? UIButton
+                                var localTitle = localButton!.titleForState(.Normal)
+                                
+                                var length : Int =  count(localTitle!.utf16)
+
+                                if length == 1 {
+                                    if isCapitalized == false {
+                                        localButton?.setTitle(localTitle?.uppercaseString, forState:.Normal)
+                                    }else{
+                                        localButton?.setTitle(localTitle?.lowercaseString, forState:.Normal)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                        isCapitalized = !isCapitalized
+
+                    }else if title == "123"{
+                        //keyboard switching code
+                        for subview in viewforKeyBoard!.subviews{
+                            if subview.isKindOfClass(UIButton){
+                                subview.removeFromSuperview()
+                            }
+                        }
+                        
+                        drawNumberPadKeyBoard()
+                        
+                    }else if title == "SPACE" && count(textView.text) > 0{
+                        //space generation code
+                        let space : String = " "
+                        textView.text = "\(textView.text) "
+                        
+                    }else if title == "↵" && count(textView.text) > 0{
+                        //enter generation code
+                        let enter : String = "\n"
+                        textView.text = "\(textView.text)\n"
+                        
+                    }else if title == "Done"{
+                        //done button to hide keyboard
+                        if (MKKeyboard.sharedInstance.currentInputField?.isKindOfClass(MKCutomTextView) != nil){
+                            var inputField = MKKeyboard.sharedInstance.currentInputField as? MKCutomTextView
+                            inputField?.resignFirstResponder()
+                        }
+                    }else{
+                        textView.text = "\(textView.text)\(title!)"
+                    }
+                }
+                
+            }else{
+                //do nothing
+            }
+        }else{
+            //do nothing
+        }
+    }
+    
+    //MARK:- Utility methods
+    
+    /**
+    function to get an image using UIColor
+    
+    :param: color color of image
+    :param: size  size of image
+    
+    :returns: UIImage
+    */
+    private func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
+
+
     
 //    
 //    func hideKeyBoard(){
