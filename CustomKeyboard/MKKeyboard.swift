@@ -39,11 +39,26 @@ class MKKeyboard: UIView, UITextViewDelegate {
     //get instance of current text view or field
     var currentInputField : AnyObject?
     
+    //get a track of capitalized stringboard
+    var isCapitalized : Bool = false
+    
     static var sharedInstance = MKKeyboard(type:.KeyboardTypeNumberPad)
     
+    
+    /**
+    function to init the key board view
+    
+    :param: type the type of keyboard required
+    
+    :returns: nil
+    */
     init(type : KeyboardType){
         super.init(frame: CGRectMake(0.0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width, 216.0))
+        
+        //initially assiging the iskeyBoardUp value false
         iskeyBoardUp = false
+        
+        //call function to draw key board view
         drawInitialViewForKeyboard(type)
     }
     
@@ -52,12 +67,18 @@ class MKKeyboard: UIView, UITextViewDelegate {
     }
     
     
+    /**
+    function to draw view frame fro keyboard
+    
+    :param: type keyboard type
+    */
     private func drawInitialViewForKeyboard(type : KeyboardType){
         //creating view for keyboard
         viewforKeyBoard = UIView(frame: CGRectMake(0.0, 0.0, UIScreen.mainScreen().bounds.size.width, 216.0))
         viewforKeyBoard?.backgroundColor = keyboardBackGroundColorForNumberPad
         self.addSubview(viewforKeyBoard!)
         
+        //checking the type of keyboard and drawing the keyboard as per requested
         if type == .KeyboardTypeNumberPad{
             drawNumberPadKeyBoard()
         }else{
@@ -65,19 +86,27 @@ class MKKeyboard: UIView, UITextViewDelegate {
         }
     }
     
+//
+//    /**
+//    function to bring keyboard up
+//    
+//    :param: type type of keyboard
+//    */
+//    func showKeyBoard(type : KeyboardType){
+//        
+//        if iskeyBoardUp == false{
+//            if type == KeyboardType.KeyboardTypeNumberPad {
+//                drawNumberPadKeyBoard()
+//            }else{
+//                drawTextPadKeyBoard()
+//            }
+//        }
+//    }
     
-    func showKeyBoard(type : KeyboardType){
-        
-        if iskeyBoardUp == false{
-            if type == KeyboardType.KeyboardTypeNumberPad {
-                drawNumberPadKeyBoard()
-            }else{
-                drawTextPadKeyBoard()
-            }
-        }
-    }
     
-    
+    /**
+    function to draw number pad keyboard
+    */
     private func drawNumberPadKeyBoard(){
         
         var buttonCounter : CGFloat = 0.0
@@ -121,7 +150,14 @@ class MKKeyboard: UIView, UITextViewDelegate {
     }
     
     
+    /**
+    function to get an image using UIColor
     
+    :param: color color of image
+    :param: size  size of image
+    
+    :returns: UIImage
+    */
     private func getImageWithColor(color: UIColor, size: CGSize) -> UIImage {
         let rect = CGRectMake(0, 0, size.width, size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -133,7 +169,11 @@ class MKKeyboard: UIView, UITextViewDelegate {
     }
     
     
+    /**
+    function to listen keypad button press activity for number pad
     
+    :param: sender UIButton
+    */
     func keyPressedInNumberPad(sender: AnyObject?) {
         let button = sender as! UIButton
         let title = button.titleForState(.Normal)
@@ -141,8 +181,10 @@ class MKKeyboard: UIView, UITextViewDelegate {
         var dataDict = Dictionary<String, String>()
         dataDict["key"] = title
         
+        //asssiging the currently activate field
         if let newcurrentInputField:AnyObject = MKKeyboard.sharedInstance.currentInputField {
             if newcurrentInputField.isKindOfClass(MKCutomTextView){
+                
                 
                 var textView : MKCutomTextView = newcurrentInputField as! MKCutomTextView
                 if title == "⇍" && count(textView.text) > 0 {
@@ -174,7 +216,11 @@ class MKKeyboard: UIView, UITextViewDelegate {
     
     
     
+    /**
+    function to listen keypad button press activity for text pad
     
+    :param: sender UIButton
+    */
     func keyPressedInTextPad(sender: AnyObject?) {
         let button = sender as! UIButton
         let title = button.titleForState(.Normal)
@@ -195,10 +241,24 @@ class MKKeyboard: UIView, UITextViewDelegate {
                         //keyboard switching code
                         for subview in viewforKeyBoard!.subviews{
                             if subview.isKindOfClass(UIButton){
-                                var button = subview as? UIButton
-                                var title = subview.titleForState(.Normal)
+                                var localButton = subview as? UIButton
+                                var localTitle = localButton!.titleForState(.Normal)
+                                
+                                var length : Int =  count(localTitle!.utf16)
+
+                                if length == 1 {
+                                    if isCapitalized == false {
+                                        localButton?.setTitle(localTitle?.uppercaseString, forState:.Normal)
+                                    }else{
+                                        localButton?.setTitle(localTitle?.lowercaseString, forState:.Normal)
+                                    }
+                                }
                             }
                         }
+                        
+                        
+                        isCapitalized = !isCapitalized
+
                     }else if title == "123"{
                         //keyboard switching code
                         for subview in viewforKeyBoard!.subviews{
@@ -239,11 +299,14 @@ class MKKeyboard: UIView, UITextViewDelegate {
     }
 
     
+    /**
+    function to draw text pad keyboard
+    */
     private func drawTextPadKeyBoard(){
         
-        let firstTextRowElemnts : [String] = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
-        let secondTextRowElemnts : [String] = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
-        let thirdTextRowElemnts : [String] = ["⇧", "Z", "X", "C", "V", "B", "N", "M", "⇍"]
+        let firstTextRowElemnts : [String] = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"]
+        let secondTextRowElemnts : [String] = ["a", "s", "d", "f", "g", "h", "j", "k", "l"]
+        let thirdTextRowElemnts : [String] = ["⇧", "z", "x", "c", "v", "b", "n", "m", "⇍"]
         let fourthRowElement : [String] = ["123", "SPACE", "↵", "Done"]
         
         var buttonCounter : CGFloat = 0.0
@@ -283,7 +346,6 @@ class MKKeyboard: UIView, UITextViewDelegate {
             var yOrigin = viewforKeyBoard!.frame.size.height/4 + 2.50
             var width = viewforKeyBoard!.frame.size.width/count - 5.0
             var height =  viewforKeyBoard!.frame.size.height/4 - 5.0
-            
             var buttonToBeShown = UIButton()
             buttonToBeShown.frame = CGRectMake(xOrigin, yOrigin, width, height)
             buttonToBeShown.backgroundColor = buttonBackgroundColorForTextPad
@@ -312,7 +374,6 @@ class MKKeyboard: UIView, UITextViewDelegate {
             var yOrigin = 2 * viewforKeyBoard!.frame.size.height/4 + 2.50
             var width = viewforKeyBoard!.frame.size.width/count - 5.0
             var height =  viewforKeyBoard!.frame.size.height/4 - 5.0
-            
             var buttonToBeShown = UIButton()
             buttonToBeShown.frame = CGRectMake(xOrigin, yOrigin, width, height)
             buttonToBeShown.backgroundColor = buttonBackgroundColorForTextPad
