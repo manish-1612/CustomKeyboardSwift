@@ -362,7 +362,6 @@ class MKKeyboard: UIView, UITextViewDelegate {
                             }
                         }
                         
-                        
                         isCapitalized = !isCapitalized
 
                     }else if title == "123"{
@@ -401,6 +400,9 @@ class MKKeyboard: UIView, UITextViewDelegate {
             //do nothing
         }
     }
+    
+    
+    
     
     //MARK:- Utility methods
     
